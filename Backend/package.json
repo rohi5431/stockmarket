@@ -1,0 +1,31 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Trading backend with Express & MongoDB",
+  "main": "src/server.js",
+  "scripts": {
+    "server": "nodemon src/server.js",
+    "str": "nodemon src/str.js",
+    "dev": "concurrently \"npm run server\" \"npm run str\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.12.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "mongoose": "^8.18.1",
+    "morgan": "^1.10.1",
+    "redis": "^5.8.2",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.10"
+  },
+  "type": "commonjs"
+}

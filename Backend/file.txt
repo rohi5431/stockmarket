@@ -1,0 +1,66 @@
+1. npm install express cors dotenv
+2. npm install mongoose
+3. npm install mongodb
+4. npm install socket.io
+5. npm install bcrypt jsonwebtoken
+6. npm install --save-dev nodemon
+7. npm init -y
+8.
+9.
+10.
+
+
+-------------backend -------------
+
+# 1. Create main folder (if not already created)
+mkdir Backend
+cd Backend
+
+# 2. Initialize Node.js project
+npm init -y
+
+# 3. Create src folder and subfolders
+mkdir -p src/{config,controllers,models,routes,services,utils}
+
+# 4. Create main files
+touch src/app.js src/server.js
+
+# 5. Create config files
+touch src/config/db.js src/config/websocket.js
+
+# 6. Create controller files
+touch src/controllers/authController.js \
+      src/controllers/marketController.js \
+      src/controllers/portfolioController.js \
+      src/controllers/strategyController.js
+
+# 7. Create model files
+touch src/models/User.js \
+      src/models/Portfolio.js \
+      src/models/Strategy.js \
+      src/models/Transaction.js
+
+# 8. Create route files
+touch src/routes/authRoutes.js \
+      src/routes/marketRoutes.js \
+      src/routes/portfolioRoutes.js \
+      src/routes/strategyRoutes.js
+
+# 9. Create service files
+touch src/services/marketService.js \
+      src/services/strategyService.js
+
+# 10. Create utility files
+touch src/utils/logger.js \
+      src/utils/validator.js
+
+# 11. Create .env file
+touch .env
+
+npm install express mongoose dotenv cors morgan ws
+npm install --save-dev nodemon
+
+npm i axios
+
+-> npm i socket.io-client for frontend
+-> npm install express socket.io cors for backend
