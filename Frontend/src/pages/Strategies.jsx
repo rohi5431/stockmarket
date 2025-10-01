@@ -22,7 +22,7 @@ const Strategies = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/strategies")
+    fetch("http://localhost:7000/api/strategies")
       .then((res) => res.json())
       .then((data) => setStrategies(data))
       .catch(console.error);

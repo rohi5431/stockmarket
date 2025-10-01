@@ -7,7 +7,8 @@ const mongoose = require("mongoose");
 const redis = require("redis");
 
 const authRoutes = require("./routes/authRoutes");
-const strategiesRoutes = require("./routes/authStrategy");
+const strategiesRoutes = require("./routes/strategyRoutes.js");
+
 
 const app = express();
 const server = http.createServer(app);

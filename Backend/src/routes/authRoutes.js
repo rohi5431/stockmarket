@@ -1,11 +1,11 @@
 const express = require("express");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const router = express.Router();
 
 // Register
-router.post("/api/register", async (req, res) => {
+router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
   try{
     const existingUser = await User.findOne({ email });
@@ -25,7 +25,7 @@ router.post("/api/register", async (req, res) => {
 });
 
 // Login
-router.post("/api/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try{
     const user = await User.findOne({ email });

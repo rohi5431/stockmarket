@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const steps = [
   {
@@ -19,6 +21,7 @@ const steps = [
 ];
 
 const StepsSection = () => {
+  const navigate = useNavigate();
   return (
     <section className="bg-gray-900 text-white py-16 px-6">
       <div className="max-w-5xl mx-auto text-center">
@@ -41,7 +44,9 @@ const StepsSection = () => {
           ))}
         </div>
         <div className="mt-12">
-          <button className="bg-blue-600 text-black px-6 py-3 rounded-full font-medium shadow-lg hover:bg-green-500 transition">
+          <button 
+          onClick={() => navigate("/signup")}
+          className="bg-blue-600 text-black px-6 py-3 rounded-full font-medium shadow-lg hover:bg-green-500 transition">
             Open Your Account
           </button>
         </div>

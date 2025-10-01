@@ -1,6 +1,6 @@
-import express from "express";
+const express = require("express");
 
-export const strategies = [
+const strategies = [
   {
     name: "RSI Momentum",
     type: "Stock",
@@ -31,9 +31,9 @@ export const strategies = [
 
 const router = express.Router();
 
-router.get("/api/strategies", (req, res) => res.json(strategies));
+router.get("/", (req, res) => res.json(strategies));
 
-router.post("/api/strategies", (req, res) => {
+router.post("/", (req, res) => {
   const strategy = {
     ...req.body,
     status: "Active",
@@ -58,5 +58,5 @@ router.post("/toggle/:symbol", (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;
 

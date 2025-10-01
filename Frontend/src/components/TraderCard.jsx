@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/Button";
 import { TraderBox, TraderBody } from "../components/ui/Card";
 import AuthContext, { AuthProvider } from "../context/AuthContext.jsx";
 

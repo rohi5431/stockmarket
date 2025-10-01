@@ -6,6 +6,7 @@ import { HiTrendingUp, HiOutlineDownload } from "react-icons/hi";
 import PortfolioOverview from "../components/PortfolioOverview";
 import PortfolioDashboard from "../components/PortfolioDashboard";
 import axios from "axios";
+import ExportFile from "../components/ExportFile";  
 
 const Portfolio = () => {
   const [holdings, setHoldings] = useState([]);
@@ -102,10 +103,12 @@ const Portfolio = () => {
             <FiFilter size={16} />
             Filter
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm rounded-lg shadow hover:from-indigo-500 hover:to-purple-500 transition">
+          {/* <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm rounded-lg shadow hover:from-indigo-500 hover:to-purple-500 transition">
             <HiOutlineDownload size={18} />
             Export
-          </button>
+          </button> */}
+          <ExportFile holdings={holdings} trades={recentTrades} />
+
         </div>
       </div>
 

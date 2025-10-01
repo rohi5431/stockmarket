@@ -15,7 +15,7 @@ router.get("/quote/:symbol", async (req, res) => {
   const symbol = req.params.symbol.toUpperCase();
   const cacheKey = `quote:${symbol}`;
 
-  if (!API_KEY) {
+  if(!API_KEY){
     return res.status(500).json({ error: "Finnhub API key not set" });
   }
 
@@ -31,14 +31,15 @@ router.get("/quote/:symbol", async (req, res) => {
 
     const { c, pc } = response.data;
 
-    if (typeof c !== "number" || typeof pc !== "number") {
+    if(typeof c !== "number" || typeof pc !== "number"){
       return res.status(404).json({ error: "Invalid quote data" });
     }
 
     const quote = { c: parseFloat(c), pc: parseFloat(pc) };
     await redisClient.setEx(cacheKey, 30, JSON.stringify(quote)); // cache for 30s
     res.json(quote);
-  } catch (err) {
+  } 
+  catch(err){
     const status = err.response?.status || 500;
     const message = err.response?.data?.error || err.message;
     console.error(`Error fetching quote for ${symbol}:`, message);

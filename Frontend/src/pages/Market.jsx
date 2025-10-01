@@ -40,30 +40,53 @@ const Market = () => {
   const [chartLoading, setChartLoading] = useState(true);
 
   // Fetch historical chart data
-  useEffect(() => {
-    const loadChartData = async () => {
+   useEffect(() => {
+    const loadHistorical = async () => {
       try {
         setChartLoading(true);
         const data = await getHistorical(selected.symbol);
+
+        if (!data || !data.length) {
+          setChartData([]);
+          return;
+        }
+
         const formatted = data.map((item) => ({
-          time: new Date(item.t).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
+          time: new Date(item.t * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
           price: item.c,
         }));
+
         setChartData(formatted);
       } catch (err) {
-        console.error("Failed to load chart data", err);
+        console.error("Failed to load historical data", err);
+        setChartData([]);
       } finally {
         setChartLoading(false);
       }
     };
 
-    loadChartData();
-    const interval = setInterval(loadChartData, 10000);
+    loadHistorical();
+  }, [selected.symbol]);
+
+  // 2️⃣ Append live price every 10s
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      try {
+        const quote = await getQuote(selected.symbol);
+        const now = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+        setChartData((prev) => [
+          ...prev.slice(-50), // keep last 50 points to avoid huge data
+          { time: now, price: quote.c },
+        ]);
+      } catch (err) {
+        console.error("Failed to fetch live quote", err);
+      }
+    }, 10000); // every 10 seconds
+
     return () => clearInterval(interval);
-  }, [selected]);
+  }, [selected.symbol]);
+
 
   // Fetch latest prices
   const fetchPrices = async (symbols) => {
@@ -140,19 +163,21 @@ const Market = () => {
       time: new Date().toISOString(),
     };
 
-    try {
+    try{
       await axios.post("http://localhost:5000/api/order", order);
 
-      if (side === "BUY") {
+      if(side === "BUY"){
         setBalance((prev) => prev - totalCost);
         addNotification(`Bought ${qtyNum} ${selected.symbol} for $${totalCost.toFixed(2)}`);
-      } else {
+      } 
+      else{
         setBalance((prev) => prev + totalCost);
         addNotification(`Sold ${qtyNum} ${selected.symbol} for $${totalCost.toFixed(2)}`);
       }
 
       setQuantity("");
-    } catch (err) {
+    } 
+    catch(err){
       console.error("Order failed", err.response?.data || err.message);
       alert(`Order failed: ${err.response?.data?.error || err.message}`);
     }

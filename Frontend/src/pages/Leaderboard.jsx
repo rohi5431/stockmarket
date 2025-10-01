@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { socket, subscribeMarket } from "../services/socket";
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/Button";
 import { TraderBox, TraderBody } from "../components/ui/Card";
 import TraderCard from "../components/TraderCard";
 import LeaderboardTable from "../components/LeaderboardTable";
