@@ -83,7 +83,7 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and
 | **GET**  | `/api/strategies` | Fetch strategies list |
 
 ## 🔹 Example API Usage
-`1️⃣ Get Portfolio Data`
+**1️⃣ Get Portfolio Data**
 **Request:**
 `GET /api/portfolio`
 
@@ -137,7 +137,7 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and
 ## 4️⃣ User Authentication
 **Request:**
 `POST /api/auth`
-``Content-Type: application/json``
+**Content-Type: application/json**
 
 ```{
   "username": "rohit",
@@ -180,7 +180,8 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and
 
 ## 🔄 WebSocket Events
 **From server.js**
- ```. portfolioUpdate,
+ ```
+ . portfolioUpdate,
  . pnlUpdate,
  . tradesUpdate,
  . marketUpdate,
