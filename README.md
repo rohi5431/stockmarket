@@ -88,7 +88,8 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and
 `GET /api/portfolio`
 
 **Response:**
-```{
+```json
+{
  "portfolioValue": 10500, "positions":
  [
  { "symbol": "AAPL", "qty": 10, "avgPrice": 150, "currentPrice": 155 },
@@ -103,7 +104,8 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and
 `GET /api/market`
 
 **Response:**
-```[
+```json
+[
 { "symbol": "AAPL", "price": 155.2, "change": "+0.5%" },
 { "symbol": "TSLA", "price": 710.0, "change": "-0.3%" },
 { "symbol": "NVDA", "price": 450.5, "change": "+1.2%" }
@@ -114,7 +116,7 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and
 **Request:**
 `POST /api/order`
 ``Content-Type: application/json``
-```
+```json
 { "symbol": "AAPL", "type": "BUY", "qty": 5, "price": 156 }
 ```
 
@@ -139,14 +141,16 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and
 `POST /api/auth`
 `Content-Type: application/json`
 
-```{
+```json
+{
   "username": "rohit",
   "password": "mypassword123"
 }
 ```
 
 **Response:**
-```{
+```json
+{
   "success": true,
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI..."
 }
@@ -157,7 +161,8 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and
 `GET /api/strategies`
 
 **Response:**
-```[
+```json
+[
   {
     "symbol": "AAPL",
     "name": "Apple",
