@@ -3,14 +3,14 @@ import { Search } from "lucide-react";
 
 const MarketHeader = () => {
   return (
-    <div className="w-full rounded-2xl bg-slate-900/60 border border-slate-700/40 p-5 md:p-6 shadow-lg mb-10">
+    <div className="w-full rounded-2xl bg-indigo-50 border-indigo-50 border-slate-700/40 p-5 md:p-6 shadow-lg mb-10">
       {/* Top row */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
         <div>
           <h2 className="text-2xl font-bold bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent">
             Live Market
           </h2>
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-indigo-600">
             Track & trade in real-time with live data
           </p>
         </div>
@@ -21,7 +21,7 @@ const MarketHeader = () => {
 
       {/* Search bar */}
       <div className="mt-5">
-        <div className="flex items-center bg-slate-800/50 border border-slate-700/50 rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-sky-500">
+        <div className="flex items-center border-gray-300 bg-indigo-200 rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-sky-500">
           <Search className="w-5 h-5 text-slate-400 mr-2" />
           <input
             type="text"

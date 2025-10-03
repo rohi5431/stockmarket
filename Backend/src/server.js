@@ -63,7 +63,7 @@ app.use(express.json());
 // ===== Routes =====
 app.use("/api", portfolioRoutes);
 app.use("/api/market", marketRoutes);
-app.use("/api/order", orderRoutes);
+app.use("/api", orderRoutes);
 
 // ===== WebSocket to Finnhub =====
 const finnhubWS = new WebSocket(`wss://ws.finnhub.io?token=${FINNHUB_API_KEY}`);

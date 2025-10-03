@@ -3,7 +3,7 @@ const router = express.Router();
 const Order = require("../models/Order");
 
 // ✅ Create new order
-router.post("/api/create_order", async (req, res) => {
+router.post("/order", async (req, res) => {
   const { symbol, side, orderType, qty, price, pnl, time } = req.body;
 
   try{
@@ -37,7 +37,7 @@ router.post("/api/create_order", async (req, res) => {
 });
 
 // ✅ Get all orders
-router.get("/api/get_orders", async (req, res) => {
+router.get("/order", async (req, res) => {
   try{
     const orders = await Order.find().sort({ time: -1 });
     res.json(orders);

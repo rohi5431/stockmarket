@@ -22,7 +22,7 @@ const Register = () => {
       alert("Passwords do not match!");
       return;
     }
-    try{
+    try {
       const res = await fetch("http://localhost:7000/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -33,27 +33,27 @@ const Register = () => {
         }),
       });
       const data = await res.json();
-      if(res.ok){
+      if (res.ok) {
         alert("Registration successful. Please login.");
         navigate("/login");
-      } 
-      else{
+      } else {
         alert(data.message);
       }
-    } 
-    catch{
+    } catch {
       alert("Server error");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-900 to-gray-800">
-      <div className="bg-gradient-to-br from-gray-700/70 to-gray-800/90 backdrop-blur-md rounded-lg p-10 w-full max-w-md text-white shadow-lg">
-        <h2 className="text-3xl font-bold mb-6 text-center">Create Your Account</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-100 to-gray-200 px-4">
+      <div className="bg-white/90 backdrop-blur-md rounded-lg p-10 w-full max-w-md shadow-lg border border-gray-300 text-gray-900">
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 hover:text-green-600 transition-colors">
+          Create Your Account
+        </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block mb-1 text-gray-300">Full Name</label>
+            <label className="block mb-1 text-gray-700">Full Name</label>
             <input
               type="text"
               name="name"
@@ -61,12 +61,12 @@ const Register = () => {
               onChange={handleChange}
               required
               placeholder="John Doe"
-              className="w-full bg-gray-100 text-gray-900 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-gray-100 text-gray-900 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
             />
           </div>
 
           <div>
-            <label className="block mb-1 text-gray-300">Email</label>
+            <label className="block mb-1 text-gray-700">Email</label>
             <input
               type="email"
               name="email"
@@ -74,12 +74,12 @@ const Register = () => {
               onChange={handleChange}
               required
               placeholder="example@email.com"
-              className="w-full bg-gray-100 text-gray-900 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-gray-100 text-gray-900 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
             />
           </div>
 
           <div className="relative">
-            <label className="block mb-1 text-gray-300">Password</label>
+            <label className="block mb-1 text-gray-700">Password</label>
             <input
               type={showPassword ? "text" : "password"}
               name="password"
@@ -87,19 +87,20 @@ const Register = () => {
               onChange={handleChange}
               required
               placeholder="Enter your password"
-              className="w-full bg-gray-100 text-gray-900 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-gray-100 text-gray-900 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-9 text-gray-600"
+              className="absolute right-3 top-9 text-gray-600 hover:text-green-500 transition"
+              aria-label="Toggle password visibility"
             >
               {showPassword ? "🔓" : "🔒"}
             </button>
           </div>
 
           <div className="relative">
-            <label className="block mb-1 text-gray-300">Confirm Password</label>
+            <label className="block mb-1 text-gray-700">Confirm Password</label>
             <input
               type={showConfirmPassword ? "text" : "password"}
               name="confirmPassword"
@@ -107,12 +108,13 @@ const Register = () => {
               onChange={handleChange}
               required
               placeholder="Confirm your password"
-              className="w-full bg-gray-100 text-gray-900 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-gray-100 text-gray-900 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
             />
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-3 top-9 text-gray-600"
+              className="absolute right-3 top-9 text-gray-600 hover:text-green-500 transition"
+              aria-label="Toggle confirm password visibility"
             >
               {showConfirmPassword ? "🔓" : "🔒"}
             </button>
@@ -120,15 +122,15 @@ const Register = () => {
 
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-green-400 to-blue-500 font-semibold py-3 rounded-md hover:from-green-500 hover:to-blue-600 transition"
+            className="w-full bg-gradient-to-r from-green-400 to-blue-400 font-semibold py-3 rounded-md text-white hover:from-green-500 hover:to-blue-500 transition"
           >
             Register
           </button>
         </form>
 
-        <p className="mt-6 text-center text-gray-300">
+        <p className="mt-6 text-center text-gray-700">
           Already have an account?{" "}
-          <Link to="/login" className="text-green-400 hover:underline">
+          <Link to="/login" className="text-green-500 hover:underline">
             Login
           </Link>
         </p>

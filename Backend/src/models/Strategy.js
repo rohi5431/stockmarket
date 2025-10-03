@@ -1,62 +1,95 @@
 const axios = require("axios");
-const dotenv = require("dotenv");
-dotenv.config();
+require("dotenv").config();
 
 const FINNHUB_API_KEY = process.env.FINNHUB_API_KEY;
 
-// In-memory strategies (replace with DB later if needed)
+// In-memory strategies
 let strategies = [
-  { name: "RSI Momentum", symbol: "AAPL", status: "Active", roi: 25, winRate: 68, trades: 45, maxDD: -8, buy: "RSI < 30", sell: "RSI > 70", price: 0 },
-  { name: "MA Crossover", symbol: "SPY", status: "Active", roi: 18, winRate: 72, trades: 23, maxDD: -12, buy: "50 MA > 200 MA", sell: "50 MA < 200 MA", price: 0 },
-  { name: "Crypto Volatility", symbol: "BTC", status: "Paused", roi: 35, winRate: 61, trades: 67, maxDD: -22, buy: "Price touches lower BB", sell: "Price touches upper BB", price: 0 },
+  {
+    name: "RSI Momentum",
+    type: "Stock",
+    symbol: "AAPL",
+    status: "Active",
+    roi: 24.8,
+    winRate: 68.5,
+    trades: 45,
+    maxDD: -12.3,
+    buy: "RSI < 30",
+    sell: "RSI > 70",
+    price: 0,
+    return: 1200,
+    followers: 100
+  },
+  {
+    name: "MACD Crossover",
+    type: "Stock",
+    symbol: "TSLA",
+    status: "Paused",
+    roi: 18.2,
+    winRate: 62.3,
+    trades: 38,
+    maxDD: -15.8,
+    buy: "MACD > Signal",
+    sell: "MACD < Signal",
+    price: 0,
+    return: 2100,
+    followers: 150
+  },
+  {
+    name: "Crypto Volatility",
+    type: "Crypto",
+    symbol: "BTC",
+    status: "Active",
+    roi: 35.4,
+    winRate: 65.2,
+    trades: 50,
+    maxDD: -18.5,
+    buy: "Touches lower BB",
+    sell: "Touches upper BB",
+    price: 0,
+    return: 1800,
+    followers: 90
+  }
 ];
 
-// Get all strategies
-const getStrategies = (req, res) => res.json(strategies);
+// === Functions ===
 
-// Create a new strategy
-const createStrategy = (req, res) => {
-  const newStrategy = { ...req.body, price: 0 };
-  strategies.push(newStrategy);
-  res.json(newStrategy);
-};
+function getStrategies() {
+  return strategies;
+}
 
-// Toggle strategy status
-const toggleStrategy = (req, res) => {
-  const s = strategies.find((st) => st.symbol === req.params.symbol);
-  if(s){
-    s.status = s.status === "Active" ? "Paused" : "Active";
-    res.json(s);
-  } 
-  else{
-    res.status(404).json({ error: "Strategy not found" });
-  }
-};
+function addStrategy(strategy) {
+  strategies.push(strategy);
+}
 
-// Fetch live prices from Finnhub
-const fetchPrices = async () => {
-  for(let s of strategies){
-    try{
-      if(s.symbol === "BTC"){
-        // Dummy crypto price, replace with CoinGecko API if needed
-        s.price = (Math.random() * 40000 + 10000).toFixed(2);
-      } 
-      else{
-        const response = await axios.get(`https://finnhub.io/api/v1/quote?symbol=${s.symbol}&token=${FINNHUB_API_KEY}`);
-        s.price = response.data.c;
+function toggleStrategyStatus(symbol) {
+  const strategy = strategies.find((s) => s.symbol === symbol);
+  if (!strategy) return null;
+  strategy.status = strategy.status === "Active" ? "Paused" : "Active";
+  return strategy;
+}
+
+async function updatePrices() {
+  for (let s of strategies) {
+    try {
+      if (s.type === "Crypto") {
+        // Dummy crypto price (replace with CoinGecko or other APIs)
+        s.price = (Math.random() * 30000 + 10000).toFixed(2);
+      } else {
+        const url = `https://finnhub.io/api/v1/quote?symbol=${s.symbol}&token=${FINNHUB_API_KEY}`;
+        const res = await axios.get(url);
+        s.price = res.data.c || 0;
       }
-    } 
-    catch(err){
-      console.error(`Error fetching price for ${s.symbol}:`, err.message);
+    } catch (err) {
+      console.error(`❌ Error fetching price for ${s.symbol}:`, err.message);
     }
   }
   return strategies;
-};
+}
 
-// Export all functions
 module.exports = {
   getStrategies,
-  createStrategy,
-  toggleStrategy,
-  fetchPrices,
+  addStrategy,
+  toggleStrategyStatus,
+  updatePrices,
 };

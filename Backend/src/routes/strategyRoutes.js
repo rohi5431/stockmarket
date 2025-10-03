@@ -1,62 +1,68 @@
 const express = require("express");
+const axios = require("axios");
+const { getStrategies, addStrategy, toggleStrategyStatus } = require("../store/strategyStore");
 
-const strategies = [
-  {
-    name: "RSI Momentum",
-    type: "Stock",
-    symbol: "AAPL",
-    status: "Active",
-    roi: "+24.8%",
-    winRate: "68.5%",
-    trades: 45,
-    maxDD: "-12.3%",
-    buy: "RSI < 30",
-    sell: "RSI > 70",
-    price: "0"
-  },
-  {
-    name: "MACD Crossover",
-    type: "Stock",
-    symbol: "TSLA",
-    status: "Paused",
-    roi: "+18.2%",
-    winRate: "62.3%",
-    trades: 38,
-    maxDD: "-15.8%",
-    buy: "MACD > Signal",
-    sell: "MACD < Signal",
-    price: "0"
-  }
-];
+
 
 const router = express.Router();
 
-router.get("/", (req, res) => res.json(strategies));
+const FINNHUB_API_KEY = process.env.FINNHUB_API_KEY;
 
+// Helper to fetch live price from Finnhub
+async function fetchPrice(symbol) {
+  try {
+    if (symbol === "BTC") {
+      // Dummy crypto price, replace with CoinGecko or real API if needed
+      return (Math.random() * 40000 + 10000).toFixed(2);
+    }
+    const response = await axios.get(
+      `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${FINNHUB_API_KEY}`
+    );
+    if (response.data && response.data.c) {
+      return response.data.c;
+    }
+    return null;
+  } catch (error) {
+    console.error("Error fetching price for", symbol, error.message);
+    return null;
+  }
+}
+
+// GET all strategies with live price
+router.get("/", async (req, res) => {
+  const strategies = getStrategies();
+  // Fetch live prices and merge
+  const updatedStrategies = await Promise.all(
+    strategies.map(async (s) => {
+      const livePrice = await fetchPrice(s.symbol);
+      return { ...s, price: livePrice !== null ? livePrice : s.price };
+    })
+  );
+  res.json(updatedStrategies);
+});
+
+// POST create a new strategy
 router.post("/", (req, res) => {
-  const strategy = {
+  const newStrategy = {
     ...req.body,
     status: "Active",
     roi: "0%",
     winRate: "0%",
     trades: 0,
     maxDD: "0%",
-    price: "0"
+    price: "0",
   };
-  strategies.push(strategy);
-  res.json(strategy);
+  const added = addStrategy(newStrategy);
+  res.status(201).json(added);
 });
 
+// POST toggle strategy status
 router.post("/toggle/:symbol", (req, res) => {
-  const s = strategies.find((x) => x.symbol === req.params.symbol);
-  if(s){
-    s.status = s.status === "Active" ? "Paused" : "Active";
-    res.json(s);
-  } 
-  else{
-    res.status(404).json({ error: "Not found" });
+  const toggled = toggleStrategyStatus(req.params.symbol);
+  if (!toggled) {
+    return res.status(404).json({ error: "Strategy not found" });
   }
+  res.json(toggled);
 });
 
 module.exports = router;
-

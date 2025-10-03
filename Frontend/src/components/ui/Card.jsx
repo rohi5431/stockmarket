@@ -2,7 +2,7 @@ import React from "react";
 
 export function Card({ children }) {
   return (
-    <div className="bg-gray-800 rounded-md p-4 shadow-md">
+    <div className="rounded-md p-4 shadow-md">
       {children}
     </div>
   );
