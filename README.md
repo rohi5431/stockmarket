@@ -88,42 +88,38 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and
 `GET /api/portfolio`
 
 **Response:**
-`{
-  "portfolioValue": 10500,
-  "positions": [
-    { "symbol": "AAPL", "qty": 10, "avgPrice": 150, "currentPrice": 155 },
-    { "symbol": "TSLA", "qty": 5, "avgPrice": 700, "currentPrice": 710 }
-  ],
-  "unrealizedPnL": 200,
-  "realizedPnL": 500
+```{
+ "portfolioValue": 10500, "positions":
+ [
+ { "symbol": "AAPL", "qty": 10, "avgPrice": 150, "currentPrice": 155 },
+ { "symbol": "TSLA", "qty": 5, "avgPrice": 700, "currentPrice": 710 }
+ ],
+ "unrealizedPnL": 200, "realizedPnL": 500
 }
-`
+```
+
 ## 2️⃣ Get Market Data
 **Request:**
 `GET /api/market`
 
 **Response:**
-`[
-  { "symbol": "AAPL", "price": 155.2, "change": "+0.5%" },
-  { "symbol": "TSLA", "price": 710.0, "change": "-0.3%" },
-  { "symbol": "NVDA", "price": 450.5, "change": "+1.2%" }
-]`
-
-
+```[
+{ "symbol": "AAPL", "price": 155.2, "change": "+0.5%" },
+{ "symbol": "TSLA", "price": 710.0, "change": "-0.3%" },
+{ "symbol": "NVDA", "price": 450.5, "change": "+1.2%" }
+]
+```
 
 ## 3️⃣ Place Order
-# Request:
+**Request:**
 POST /api/order
 Content-Type: application/json
-
-{
-  "symbol": "AAPL",
-  "type": "BUY",
-  "qty": 5,
-  "price": 156
-}
+```
+{ "symbol": "AAPL", "type": "BUY", "qty": 5, "price": 156 }
+```
 
 # Response:
+```json
 {
   "success": true,
   "message": "Order placed successfully",
@@ -136,29 +132,32 @@ Content-Type: application/json
     "status": "EXECUTED"
   }
 }
+```
 
 ## 4️⃣ User Authentication
-Request:
+**Request:**
 POST /api/auth
 Content-Type: application/json
 
-{
+```{
   "username": "rohit",
   "password": "mypassword123"
 }
+```
 
-Response:
-{
+**Response:**
+```{
   "success": true,
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI..."
 }
+```
 
 ## 5️⃣ Get Strategies
-Request:
+**Request:**
 GET /api/strategies
 
-Response:
-[
+**Response:**
+```[
   {
     "symbol": "AAPL",
     "name": "Apple",
@@ -176,17 +175,19 @@ Response:
     "winRate": "80%"
   }
 ]
-
+```
 ---
 
 ## 🔄 WebSocket Events
-From server.js
- . portfolioUpdate,
+**From server.js**
+ ```. portfolioUpdate,
  . pnlUpdate,
  . tradesUpdate,
  . marketUpdate,
-From str.js
- . strategiesUpdate,
+```
+**From str.js**
+``` . strategiesUpdate,
+```
 
 ## ⚙️ Installation  
 
@@ -221,13 +222,15 @@ npm run dev
 npm run dev
 
 ## Now open: http://localhost:5173
+```
 
-✍️ Author
+## ✍️ Author
 
-Rohit Kumar
-💻 Full-Stack Developer | 📊 Stock Market Enthusiast 
+**Rohit Kumar**
+```💻 Full-Stack Developer | 📊 Stock Market Enthusiast 
 . GitHub: @rohi5431
 . LinkedIn: Rohit Kumar
 . Email: rohit60316@gmail.com
+```
 
 
