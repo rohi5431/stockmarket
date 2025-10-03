@@ -83,7 +83,7 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and
 | **GET**  | `/api/strategies` | Fetch strategies list |
 
 ## 🔹 Example API Usage
-1️⃣ Get Portfolio Data
+`1️⃣ Get Portfolio Data`
 **Request:**
 `GET /api/portfolio`
 
@@ -112,13 +112,13 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and
 
 ## 3️⃣ Place Order
 **Request:**
-POST /api/order
-Content-Type: application/json
+`POST /api/order`
+``Content-Type: application/json``
 ```
 { "symbol": "AAPL", "type": "BUY", "qty": 5, "price": 156 }
 ```
 
-# Response:
+**Response:**
 ```json
 {
   "success": true,
@@ -136,8 +136,8 @@ Content-Type: application/json
 
 ## 4️⃣ User Authentication
 **Request:**
-POST /api/auth
-Content-Type: application/json
+`POST /api/auth`
+``Content-Type: application/json``
 
 ```{
   "username": "rohit",
@@ -154,7 +154,7 @@ Content-Type: application/json
 
 ## 5️⃣ Get Strategies
 **Request:**
-GET /api/strategies
+`GET /api/strategies`
 
 **Response:**
 ```[
@@ -186,7 +186,8 @@ GET /api/strategies
  . marketUpdate,
 ```
 **From str.js**
-``` . strategiesUpdate,
+```
+ . strategiesUpdate,
 ```
 
 ## ⚙️ Installation  
@@ -195,34 +196,44 @@ GET /api/strategies
 ```bash
 git clone https://github.com/rohi5431/stockmarket.git
 cd stockmarket
+```
 
 ## 2️⃣ Backend Setup
-cd Backend
-npm install
+```
+. cd Backend
+. npm install
+```
 
 # Create a .env file inside Backend/, with:
-MONGO_URI=mongodb://localhost:27017/stockmarket
-REDIS_HOST=127.0.0.1
-REDIS_PORT=6379
-FINNHUB_API_KEY=your_finnhub_api_key
-PORT1=5000
-PORT2=7000
+```
+. MONGO_URI=mongodb://localhost:27017/stockmarket
+. REDIS_HOST=127.0.0.1
+. REDIS_PORT=6379
+. FINNHUB_API_KEY=your_finnhub_api_key
+. PORT1=5000
+. PORT2=7000
+```
 
 ## 3️⃣ Frontend Setup
-cd ../Frontend
-npm install
+```
+. cd ../Frontend
+. npm install
+```
 
 ## ▶️ Running the Project
-Run both backend servers, concurrently:
-
+```
+. Run both backend servers, concurrently:
+```
 ## cd Backend
-npm run dev
+```
+. npm run dev
+```
 
 ## cd Frontend
-npm run dev
-
-## Now open: http://localhost:5173
 ```
+. npm run dev
+```
+## Now open: http://localhost:5173
 
 ## ✍️ Author
 
