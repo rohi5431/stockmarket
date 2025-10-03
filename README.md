@@ -24,46 +24,47 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and
 
 ## 📂 Project Structure  
 
-stockmarket/
+```stockmarket/
 │
 ├── Backend/
-│   ├── src/
-│   │   ├── config/
-│   │   ├── controllers/
-│   │   ├── middleware/
-│   │   ├── models/
-│   │   ├── routes/
-│   │   ├── services/
-│   │   ├── store/
-│   │   ├── server.js
-│   │   └── str.js
-│   │
-│   ├── .env
-│   ├── package.json
-│   ├── package-lock.json
-│   └── README.md
+│ ├── src/
+│ │ ├── config/
+│ │ ├── controllers/
+│ │ ├── middleware/
+│ │ ├── models/
+│ │ ├── routes/
+│ │ ├── services/
+│ │ ├── store/
+│ │ ├── server.js
+│ │ └── str.js
+│ │
+│ ├── .env
+│ ├── package.json
+│ ├── package-lock.json
+│ └── README.md
 │
 ├── Frontend/
-│   ├── src/
-│   │   ├── assets/
-│   │   ├── components/
-│   │   ├── context/
-│   │   ├── hooks/
-│   │   ├── lib/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   └── styles/
-│   └── App.css/
-│   └── index.css/
-│   └── App.jsx/
-│   └── main.jsx/
-│   ├── public/
-│   ├── package.json
-│   ├── package-lock.json
-│   └── vite.config.js
+│ ├── src/
+│ │ ├── assets/
+│ │ ├── components/
+│ │ ├── context/
+│ │ ├── hooks/
+│ │ ├── lib/
+│ │ ├── pages/
+│ │ ├── services/
+│ │ └── styles/
+│ │ ├── App.css
+│ │ ├── index.css
+│ │ ├── App.jsx
+│ │ └── main.jsx
+│ │
+│ ├── public/
+│ ├── package.json
+│ ├── package-lock.json
+│ └── vite.config.js
 │
 ├── .gitignore
-└── README.md
+└── README.md  
 
 ## 🛠️ Tech Stack
 . Backend: Node.js, Express, Socket.IO, WebSocket, Axios
