@@ -137,7 +137,7 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and
 ## 4️⃣ User Authentication
 **Request:**
 `POST /api/auth`
-**Content-Type: application/json**
+`Content-Type: application/json`
 
 ```{
   "username": "rohit",
@@ -225,16 +225,16 @@ cd stockmarket
 ```
 . Run both backend servers, concurrently:
 ```
-## cd Backend
+**cd Backend**
 ```
 . npm run dev
 ```
 
-## cd Frontend
+**cd Frontend**
 ```
 . npm run dev
 ```
-## Now open: http://localhost:5173
+**Now open: http://localhost:5173**
 
 ## ✍️ Author
 
