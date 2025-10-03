@@ -240,9 +240,9 @@ npm run dev
 
 **Rohit Kumar**
 ```💻 Full-Stack Developer | 📊 Stock Market Enthusiast 
-. GitHub: @rohi5431
+. GitHub: http://rohi5431
 . LinkedIn: Rohit Kumar
-. Email: rohit60316@gmail.com
+. Email: http://rohit60316@gmail.com
 ```
 
 
