@@ -84,11 +84,11 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and
 
 ## 🔹 Example API Usage
 1️⃣ Get Portfolio Data
-Request:
-GET /api/portfolio
+**Request:**
+`GET /api/portfolio`
 
-Response:
-{
+**Response:**
+`{
   "portfolioValue": 10500,
   "positions": [
     { "symbol": "AAPL", "qty": 10, "avgPrice": 150, "currentPrice": 155 },
@@ -97,16 +97,17 @@ Response:
   "unrealizedPnL": 200,
   "realizedPnL": 500
 }
+`
 ## 2️⃣ Get Market Data
-Request:
-GET /api/market
+**Request:**
+`GET /api/market`
 
-Response:
-[
+**Response:**
+`[
   { "symbol": "AAPL", "price": 155.2, "change": "+0.5%" },
   { "symbol": "TSLA", "price": 710.0, "change": "-0.3%" },
   { "symbol": "NVDA", "price": 450.5, "change": "+1.2%" }
-]
+]`
 
 
 
