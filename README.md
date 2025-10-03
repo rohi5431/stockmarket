@@ -223,16 +223,16 @@ cd stockmarket
 
 ## ▶️ Running the Project
 ```
-. Run both backend servers, concurrently:
+Run both backend servers, concurrently:
 ```
 **cd Backend**
 ```
-. npm run dev
+npm run dev
 ```
 
 **cd Frontend**
 ```
-. npm run dev
+npm run dev
 ```
 **Now open: http://localhost:5173**
 
