@@ -5,7 +5,7 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and
 
 ---
 
-# Demo 
+# 🌐 Demo 
 <img width="1666" height="918" alt="Screenshot 2025-10-26 212528" src="https://github.com/user-attachments/assets/605a80f1-da4f-44f4-a601-d81b0e52cb97" />
 
 <img width="1900" height="927" alt="Screenshot 2025-10-26 213139" src="https://github.com/user-attachments/assets/16ddf8c1-98e8-48eb-a313-45414896c5b8" />
