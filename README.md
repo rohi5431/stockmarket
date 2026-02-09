@@ -256,8 +256,7 @@ npm run dev
 ## ✍️ Author
 
 **Rohit Kumar**
-```💻 Full-Stack Developer | 📊 Stock Market Enthusiast 
-```
+💻 Full-Stack Developer | 📊 Stock Market Enthusiast 
 - GitHub: https://github.com/rohi5431 
 - Email: rohitk60316@gmail.com
 - Linkedln: https://www.linkedin.com/in/rohit-kumar-3707382a2/
