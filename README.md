@@ -254,8 +254,7 @@ npm run dev
 **Now open: http://localhost:5173**
 
 ## ✍️ Author
-
-**Rohit Kumar**
+## Rohit Kumar
 💻 Full-Stack Developer | 📊 Stock Market Enthusiast 
 - GitHub: https://github.com/rohi5431 
 - Email: rohitk60316@gmail.com
