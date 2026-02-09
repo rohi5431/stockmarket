@@ -257,10 +257,10 @@ npm run dev
 
 **Rohit Kumar**
 ```💻 Full-Stack Developer | 📊 Stock Market Enthusiast 
-. GitHub: http://rohi5431
-. LinkedIn: https://www.linkedin.com/in/rohit-kumar-3707382a2/
-. Email: http://rohit60316@gmail.com
 ```
+- GitHub: https://github.com/rohi5431 
+- Email: rohitk60316@gmail.com
+- Linkedln: https://www.linkedin.com/in/rohit-kumar-3707382a2/
 
 
 
