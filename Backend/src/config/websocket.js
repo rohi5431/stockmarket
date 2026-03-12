@@ -1,14 +1,28 @@
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
+const Redis = require("ioredis");
 
 const app = express();
 const server = http.createServer(app);
 
+// Redis connection
+const redis = new Redis(
+  process.env.REDIS_URL || "redis://red-d6p4li9r0fns73e45b20:6379"
+);
+
+redis.on("connect", () => {
+  console.log("✅ Redis Connected");
+});
+
+redis.on("error", (err) => {
+  console.log("❌ Redis Error:", err);
+});
+
 const io = new Server(server, {
-  path: "/ws", // ✅ matches frontend
+  path: "/ws",
   cors: {
-    origin: "http://localhost:5173", // Vite dev server
+    origin: "*",   // change later to frontend domain
     methods: ["GET", "POST"]
   }
 });
@@ -21,7 +35,7 @@ io.on("connection", (socket) => {
     console.log(`📡 Client subscribed to ${room}`);
   });
 
-  // Example: emit market updates
+  // Example market updates
   setInterval(() => {
     io.to("stocks").emit("marketUpdate", {
       symbol: "AAPL",
@@ -34,6 +48,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(7000, () => {
-  console.log("🚀 Server listening on http://localhost:7000");
+server.listen(process.env.PORT || 7000, () => {
+  console.log("🚀 Server running");
 });
