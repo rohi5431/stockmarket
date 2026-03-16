@@ -7,7 +7,9 @@ require("dotenv").config();
 
 const FINNHUB_API = "https://finnhub.io/api/v1";
 const API_KEY = process.env.FINNHUB_API_KEY;
-const redisClient = redis.createClient();
+const redisClient = redis.createClient({
+  url: process.env.REDIS_URL,   // always use your cloud Redis URL
+});
 
 redisClient.connect().catch(console.error);
 
