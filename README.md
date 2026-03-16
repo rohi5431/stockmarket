@@ -4,7 +4,16 @@ A full-stack stock market simulation platform, with real-time data streaming, po
 Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and **React**.
 
 ---
+## 🚀 Live Project
 
+The Stock Market Simulation project is fully deployed and accessible online.
+
+- **Frontend (Vercel):**  
+  https://stockmarket-ly5m.vercel.app
+
+- **Backend API (Render):**  
+  https://stockmarket-13.onrender.com
+  
 # 🌐 Demo
 
 <img width="1666" height="918" alt="Screenshot 2025-10-26 212528" src="https://github.com/user-attachments/assets/605a80f1-da4f-44f4-a601-d81b0e52cb97" />
