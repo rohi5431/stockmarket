@@ -1,10 +1,9 @@
-## 📈 Stock Market Platform
+# 📈 Stock Market Platform
 
-A full-stack stock market simulation platform with real-time data streaming, portfolio tracking, strategy management, authentication, and AI-powered insights.
-Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, **React**, and **FastAPI (ML Service)**.
----
+A full-stack stock market simulation platform with **real-time data streaming, portfolio tracking, strategy management, and AI-powered predictions (Trading Signals + Anomaly Detection)**.  
+Built using **Node.js (MERN)** + **Python FastAPI ML Service**.
 
-# 🌐 Demo
+### 🌐 Demo
 
 <h2 align="center">📊 AI Trading Dashboard</h2>
 <p align="center">
@@ -36,7 +35,7 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, **R
 
 ---
 
-## 🚀 Features
+### 🚀 Features
 
 #### 🔹 Backend
 
@@ -63,7 +62,7 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, **R
 
 ---
 
-## 🤖 ML Models Used
+### 🤖 ML Models Used
 
 #### 📊 Trading Signal Model
 
@@ -87,7 +86,7 @@ Detects unusual behavior like:
 
 ---
 
-## ⚙️ Architecture
+### ⚙️ Architecture
 
 ```text
 Finnhub API
@@ -102,7 +101,7 @@ Node.js
    ↓
 WebSocket → React UI
 ```
-# 📂 Project Structure
+### 📂 Project Structure
 
 ```
 stockmarket/
@@ -166,37 +165,41 @@ stockmarket/
 ```
 
 ---
-# 🛠️ Tech Stack
+### 🛠️ Tech Stack
 
-### Backend
+#### Backend
+```
 - Node.js
 - Express.js
 - Socket.IO
 - WebSockets
 - MongoDB
 - Redis
-
-### Frontend
+```
+#### Frontend
+```
 - React (Vite)
 - Context API
 - Hooks
-
-### AI / ML
+```
+#### AI / ML
+```
 - Python
 - FastAPI
 - Scikit-learn
-
-### Tools
+```
+#### Tools
+```
 - Docker
 - Git/GitHub
 - Postman
 - Vercel
 - Render
-
+```
 ---
 
-# 📡 API Endpoints
-
+### 📡 API Endpoints
+```
 | Method | Endpoint | Description |
 |------|---------|-------------|
 | **GET** | `/api/portfolio` | Fetch portfolio data |
@@ -207,7 +210,7 @@ stockmarket/
 | **POST**| `/api/ai/explain/:symbol` | Get AI-powered stock explanation |
 | POST | `/predict-signal` | Buy/Sell prediction |
 | POST | `/detect-anomaly` | Detect anomalies |
-
+```
 ---
 ### 🔄 WebSocket Events
 ```
@@ -217,7 +220,7 @@ pnlUpdate
 tradesUpdate
 strategiesUpdate
 ```
-# 🔹 Example API Usage
+### 🔹 Example API Usage
 
 ### 1️⃣ Get Portfolio Data
 
@@ -360,7 +363,7 @@ GET /api/strategies
 
 ---
 
-# 🔄 WebSocket Events
+### 🔄 WebSocket Events
 
 ### From `server.js`
 
@@ -379,7 +382,7 @@ strategiesUpdate
 
 ---
 
-# ⚙️ Installation
+### ⚙️ Installation
 
 ### 1️⃣ Clone the repository
 
@@ -396,7 +399,7 @@ cd stockmarket
 cd Backend
 npm install
 ```
-3️⃣ ML Service Setup
+### 3️⃣ ML Service Setup
 ```bash
 cd ../ML_Service
 pip install -r requirements.txt
@@ -425,7 +428,7 @@ npm install
 
 ---
 
-# ▶️ Running the Project
+### ▶️ Running the Project
 
 Run both backend and frontend servers.
 
