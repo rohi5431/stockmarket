@@ -1,28 +1,26 @@
-# 📈 Stock Market Platform
+## 📈 AI-Powered Stock Market Platform
 
 A full-stack stock market simulation platform with **real-time data streaming, portfolio tracking, strategy management, and AI-powered predictions (Trading Signals + Anomaly Detection)**.  
 Built using **Node.js (MERN)** + **Python FastAPI ML Service**.
 
 ### 🌐 Demo
 
-<h2 align="center">📊 AI Trading Dashboard</h2>
+<h3 align="center">📊 AI Trading Dashboard</h3>
 <p align="center">
   <img src="./Frontend/public/Screenshot%202026-04-30%20181904.png" width="900"/>
 </p>
 
-<h2 align="center">AI-powered trading signals with anomaly detection</h2>
+<h3 align="center">AI-powered trading signals with anomaly detection</h3>
 <p align="center">
   <img src="https://github.com/rohi5431/stockmarket/raw/main/Frontend/public/Screenshot%202026-04-30%20175959.png" width="900"/>
 </p>
 
-<h2 align="center">Latest News Section</h2>
+<h3 align="center">Latest News Section</h3>
 <p align="center">
   <img src="https://github.com/user-attachments/assets/fceb5058-c5b0-46d4-b951-62aded594225" width="900"/>
 </p>
 
-<p align="center">
-  <b>Portfolio tracking and performance analytics</b>
-</p>
+ <h3 align="center">Portfolio tracking and performance analytics</h3>
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/605a80f1-da4f-44f4-a601-d81b0e52cb97" width="900"/>
@@ -38,52 +36,53 @@ Built using **Node.js (MERN)** + **Python FastAPI ML Service**.
 ### 🚀 Features
 
 #### 🔹 Backend
-
+```
 - **REST API**, for portfolio, market, and order management  
 - **WebSocket live feed**, using Finnhub API (`server.js`)  
 - **Real-time strategies & authentication service**, (`str.js`)  
 - **MongoDB**, for persistent storage  
 - **Redis**, for caching and performance  
-
+```
 #### 🔹 AI / ML Integration
-
+```
 - FastAPI-based **ML microservice**
 - **Trading Signal Prediction (Buy/Sell)**
 - **Anomaly Detection (price & volume spikes)**
 - Real-time ML inference integrated with backend  
 - AI-powered explanation using Gemini API  
-
+```
 #### 🔹 Frontend
-
+```
 - **React (Vite) client**  
 - **Real-time updates**, powered by Socket.IO  
 - **Portfolio visualization**, trades feed, and top movers  
 - **Authentication & strategy tracking**
-
+```
 ---
 
 ### 🤖 ML Models Used
 
 #### 📊 Trading Signal Model
-
+```
 - **Model:** Logistic Regression  
 - **Library:** Scikit-learn  
 - **Type:** Binary Classification  
-
+```
 Predicts whether a stock should be **Buy** or **Sell** based on historical trends.
 
 ---
 
 #### ⚡ Anomaly Detection Model
-
+```
 - **Model:** Isolation Forest  
 - **Library:** Scikit-learn  
 - **Type:** Unsupervised Learning  
-
+```
 Detects unusual behavior like:
+```
 - sudden price spikes  
 - abnormal volume  
-
+```
 ---
 
 ### ⚙️ Architecture
