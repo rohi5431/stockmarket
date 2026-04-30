@@ -1,27 +1,44 @@
 # 📈 Stock Market Platform
 
-A full-stack stock market simulation platform, with real-time data streaming, portfolio tracking, strategy management, and authentication.  
-Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and **React**.
-
+A full-stack stock market simulation platform, with real-time data streaming, portfolio tracking, strategy management, authentication, and AI-powered insights.  
+Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, **React**, and **FastAPI (ML Service)**.
 ---
 
 # 🌐 Demo
 
-<img width="1666" height="918" alt="Screenshot 2025-10-26 212528" src="https://github.com/user-attachments/assets/605a80f1-da4f-44f4-a601-d81b0e52cb97" />
+<h2 align="center">📊 AI Trading Dashboard</h2>
+<p align="center">
+  <img src="./Frontend/public/Screenshot%202026-04-30%20181904.png" width="900"/>
+</p>
 
-<img width="1900" height="927" alt="Screenshot 2025-10-26 213139" src="https://github.com/user-attachments/assets/16ddf8c1-98e8-48eb-a313-45414896c5b8" />
+<h2 align="center">AI-powered trading signals with anomaly detection</h2>
+<p align="center">
+  <img src="https://github.com/rohi5431/stockmarket/raw/main/Frontend/public/Screenshot%202026-04-30%20175959.png" width="900"/>
+</p>
 
-<img width="1840" height="838" alt="Screenshot 2025-10-26 213429" src="https://github.com/user-attachments/assets/fceb5058-c5b0-46d4-b951-62aded594225" />
+<h2 align="center">Latest News Section</h2>
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/fceb5058-c5b0-46d4-b951-62aded594225" width="900"/>
+</p>
 
-<img width="1880" height="924" alt="Screenshot 2025-10-26 213543" src="https://github.com/user-attachments/assets/bf10be45-12af-4332-ab6e-52a22aed7c64" />
+<p align="center">
+  <b>Portfolio tracking and performance analytics</b>
+</p>
 
-<img width="1903" height="929" alt="Screenshot 2025-10-26 212453" src="https://github.com/user-attachments/assets/74a517f4-320c-4d74-95d1-30572eef98e9" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/605a80f1-da4f-44f4-a601-d81b0e52cb97" width="900"/>
+</p>
+
+<p align="center">
+  <img src="./Frontend/public/Portfolio.png" width="900"/>
+</p>
+
 
 ---
 
-# 🚀 Features
+## 🚀 Features
 
-### 🔹 Backend
+#### 🔹 Backend
 
 - **REST API**, for portfolio, market, and order management  
 - **WebSocket live feed**, using Finnhub API (`server.js`)  
@@ -29,7 +46,15 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and
 - **MongoDB**, for persistent storage  
 - **Redis**, for caching and performance  
 
-### 🔹 Frontend
+#### 🔹 AI / ML Integration
+
+- FastAPI-based **ML microservice**
+- **Trading Signal Prediction (Buy/Sell)**
+- **Anomaly Detection (price & volume spikes)**
+- Real-time ML inference integrated with backend  
+- AI-powered explanation using Gemini API  
+
+#### 🔹 Frontend
 
 - **React (Vite) client**  
 - **Real-time updates**, powered by Socket.IO  
@@ -38,6 +63,45 @@ Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, and
 
 ---
 
+## 🤖 ML Models Used
+
+#### 📊 Trading Signal Model
+
+- **Model:** Logistic Regression  
+- **Library:** Scikit-learn  
+- **Type:** Binary Classification  
+
+Predicts whether a stock should be **Buy** or **Sell** based on historical trends.
+
+---
+
+#### ⚡ Anomaly Detection Model
+
+- **Model:** Isolation Forest  
+- **Library:** Scikit-learn  
+- **Type:** Unsupervised Learning  
+
+Detects unusual behavior like:
+- sudden price spikes  
+- abnormal volume  
+
+---
+
+## ⚙️ Architecture
+
+```text
+Finnhub API
+   ↓
+Node.js Backend (MERN)
+   ↓
+FastAPI ML Service (Python)
+   ↓
+Prediction (Buy/Sell + Anomaly)
+   ↓
+Node.js
+   ↓
+WebSocket → React UI
+```
 # 📂 Project Structure
 
 ```
@@ -47,52 +111,87 @@ stockmarket/
 │ ├── src/
 │ │ ├── config/
 │ │ ├── controllers/
+│ │ │ ├── aiController.js
+│ │ │ └── marketController.js
 │ │ ├── middleware/
 │ │ ├── models/
 │ │ ├── routes/
 │ │ ├── services/
 │ │ ├── store/
+│ │ ├── utils/
 │ │ ├── server.js
 │ │ └── str.js
 │ │
+│ ├── .dockerignore
 │ ├── .env
-│ ├── package.json
+│ ├── Dockerfile
+│ ├── file.txt
 │ ├── package-lock.json
+│ ├── package.json
+│ ├── test-gemini.js
+│ ├── test-models.js
 │ └── README.md
 │
 ├── Frontend/
-│ ├── src/
-│ │ ├── assets/
-│ │ ├── components/
-│ │ ├── context/
-│ │ ├── hooks/
-│ │ ├── lib/
-│ │ ├── pages/
-│ │ ├── services/
-│ │ └── styles/
-│ │ ├── App.css
-│ │ ├── index.css
-│ │ ├── App.jsx
-│ │ └── main.jsx
-│ │
+│ ├── node_modules/
 │ ├── public/
-│ ├── package.json
+│ ├── src/
+│ ├── .dockerignore
+│ ├── .env
+│ ├── .gitignore
+│ ├── Dockerfile
+│ ├── eslint.config.js
+│ ├── index.html
 │ ├── package-lock.json
+│ ├── package.json
+│ ├── README.md
 │ └── vite.config.js
 │
+├── ML_Service/
+│ ├── .env
+│ ├── dashboard.jsx
+│ ├── docker-compose.yml
+│ ├── leaderboard.jsx
+│ ├── Login.jsx
+│ ├── market.jsx
+│ ├── mentor.jsx
+│ ├── portfolio.jsx
+│ ├── README.md
+│ ├── signup.jsx
+│ └── strategies.jsx
+│
 ├── .gitignore
+├── Dockerfile
 └── README.md
 ```
 
 ---
-
 # 🛠️ Tech Stack
 
-- **Backend:** Node.js, Express, Socket.IO, WebSocket, Axios  
-- **Database:** MongoDB (Mongoose ORM)  
-- **Cache:** Redis  
-- **Frontend:** React (Vite), Context API, Hooks  
-- **Tools:** Concurrently, dotenv, CORS  
+### Backend
+- Node.js
+- Express.js
+- Socket.IO
+- WebSockets
+- MongoDB
+- Redis
+
+### Frontend
+- React (Vite)
+- Context API
+- Hooks
+
+### AI / ML
+- Python
+- FastAPI
+- Scikit-learn
+
+### Tools
+- Docker
+- Git/GitHub
+- Postman
+- Vercel
+- Render
 
 ---
 
@@ -106,9 +205,18 @@ stockmarket/
 | **POST** | `/api/auth` | User authentication |
 | **GET** | `/api/strategies` | Fetch strategies list |
 | **POST**| `/api/ai/explain/:symbol` | Get AI-powered stock explanation |
+| POST | `/predict-signal` | Buy/Sell prediction |
+| POST | `/detect-anomaly` | Detect anomalies |
 
 ---
-
+### 🔄 WebSocket Events
+```
+marketUpdate
+portfolioUpdate
+pnlUpdate
+tradesUpdate
+strategiesUpdate
+```
 # 🔹 Example API Usage
 
 ### 1️⃣ Get Portfolio Data
@@ -288,7 +396,12 @@ cd stockmarket
 cd Backend
 npm install
 ```
-
+3️⃣ ML Service Setup
+```bash
+cd ../ML_Service
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
 Create a `.env` file inside **Backend/**
 
 ```
@@ -329,7 +442,11 @@ npm run dev
 cd Frontend
 npm run dev
 ```
-
+### ML Service
+```bash
+cd ML_Service
+uvicorn main:app --reload
+```
 Open in browser:
 
 ```
@@ -345,5 +462,5 @@ http://localhost:5173
 💻 Full-Stack Developer | 📊 Stock Market Enthusiast  
 
 - GitHub: https://github.com/rohi5431  
-- LinkedIn: Rohit Kumar  
+- LinkedIn: [Rohit Kumar  ](https://www.linkedin.com/in/rohit-kumar-3707382a2/)
 - Email: rohit60316@gmail.com
