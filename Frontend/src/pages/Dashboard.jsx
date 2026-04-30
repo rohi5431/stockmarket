@@ -5,20 +5,30 @@ import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { FiActivity } from "react-icons/fi";
 import { FaBullseye, FaMedal } from "react-icons/fa";
 import { io } from "socket.io-client";
+import { API } from "../config/api";
+import { getNews } from "../services/marketService";
 
 const Dashboard = () => {
   const [portfolioData, setPortfolioData] = useState([]);
   const [pnlData, setPnlData] = useState([]);
   const [recentTrades, setRecentTrades] = useState([]);
   const [movers, setMovers] = useState([]);
+  const [news, setNews] = useState([]);
 
   useEffect(() => {
-    const socket = io("http://localhost:5000", { path: "/ws" });
+    const socket = io(API, { path: "/ws" });
     socket.on("connect", () => console.log("Connected:", socket.id));
     socket.on("portfolioUpdate", data => setPortfolioData(data));
     socket.on("pnlUpdate", data => setPnlData(data));
     socket.on("tradesUpdate", data => setRecentTrades(data));
     socket.on("marketUpdate", data => setMovers(data));
+    
+    const fetchNews = async () => {
+      const data = await getNews();
+      setNews(data);
+    };
+    fetchNews();
+
     return () => socket.disconnect();
   }, []);
 
@@ -28,6 +38,9 @@ const Dashboard = () => {
   const previousPnL = pnlData.length > 1 ? pnlData[pnlData.length - 2].value : latestPnL;
   const profitableTrades = recentTrades.filter(t => t.pnl >= 0).length;
   const lossTrades = recentTrades.filter(t => t.pnl < 0).length;
+
+  const topGainers = [...movers].filter(m => m.change >= 0).sort((a, b) => b.change - a.change);
+  const topLosers = [...movers].filter(m => m.change < 0).sort((a, b) => a.change - b.change);
 
   return (
     <div className="flex min-h-screen bg-gray-50 text-gray-900">
@@ -163,22 +176,56 @@ const Dashboard = () => {
           <Card className="bg-lime-50 border border-lime-200 shadow-sm rounded-xl overflow-hidden">
             <CardContent>
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold text-lime-900 flex items-center gap-2">🚀 Top Movers</h3>
+                <h3 className="text-lg font-semibold text-lime-900 flex items-center gap-2">🚀 Top Gainers & Losers</h3>
                 <a href="#" className="text-lime-500 text-sm hover:underline">View Market</a>
               </div>
-              <div className="space-y-2">
-                {movers.map((stock, i) => (
-                  <div key={i} className="flex justify-between items-center px-3 py-3 rounded-lg bg-lime-100 hover:bg-lime-200 transition">
-                    <span className="text-lime-700 text-sm">
-                      <span className="font-medium text-lime-900">{stock.symbol}</span>
-                      <span className="ml-1 text-xs text-lime-500">(${stock.price})</span>
-                    </span>
-                    <span className={`flex items-center gap-1 text-sm font-semibold ${stock.change >= 0 ? "text-green-600" : "text-red-600"}`}>
-                      {stock.change >= 0 ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
-                      {stock.change}%
+              
+              <h4 className="text-sm font-semibold text-green-700 mb-2">Top Gainers</h4>
+              <div className="space-y-2 mb-4">
+                {topGainers.map((stock, i) => (
+                  <div key={i} className="flex justify-between items-center px-3 py-2 rounded-lg bg-green-100 hover:bg-green-200 transition">
+                    <span className="text-green-800 text-sm font-medium">{stock.symbol} <span className="text-xs text-green-600">(${stock.price})</span></span>
+                    <span className="flex items-center gap-1 text-sm font-semibold text-green-600">
+                      <ArrowUpRight size={16} /> {stock.change}%
                     </span>
                   </div>
                 ))}
+                {topGainers.length === 0 && <p className="text-xs text-gray-500">No gainers right now.</p>}
+              </div>
+
+              <h4 className="text-sm font-semibold text-red-700 mb-2">Top Losers</h4>
+              <div className="space-y-2">
+                {topLosers.map((stock, i) => (
+                  <div key={i} className="flex justify-between items-center px-3 py-2 rounded-lg bg-red-100 hover:bg-red-200 transition">
+                    <span className="text-red-800 text-sm font-medium">{stock.symbol} <span className="text-xs text-red-600">(${stock.price})</span></span>
+                    <span className="flex items-center gap-1 text-sm font-semibold text-red-600">
+                      <ArrowDownRight size={16} /> {Math.abs(stock.change)}%
+                    </span>
+                  </div>
+                ))}
+                {topLosers.length === 0 && <p className="text-xs text-gray-500">No losers right now.</p>}
+              </div>
+
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* News Section */}
+        <div className="mb-6">
+          <Card className="bg-white border border-gray-200 shadow-sm rounded-xl overflow-hidden">
+            <CardContent>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">📰 Market News</h3>
+              <div className="space-y-4">
+                {news.length > 0 ? news.map((item, i) => (
+                  <div key={i} className="flex gap-4 p-3 hover:bg-gray-50 rounded-lg transition border border-transparent hover:border-gray-100">
+                    {item.image && <img src={item.image} alt="news" className="w-24 h-24 object-cover rounded-md" />}
+                    <div>
+                      <a href={item.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-indigo-700 hover:underline">{item.headline}</a>
+                      <p className="text-sm text-gray-600 mt-1 line-clamp-2">{item.summary}</p>
+                      <p className="text-xs text-gray-400 mt-2">{new Date(item.datetime * 1000).toLocaleString()}</p>
+                    </div>
+                  </div>
+                )) : <p className="text-sm text-gray-500">Loading news...</p>}
               </div>
             </CardContent>
           </Card>

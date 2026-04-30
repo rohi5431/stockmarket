@@ -10,7 +10,9 @@ const PortfolioOverview = () => {
   const [holdings, setHoldings] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/portfolio")
+    const API_URL = import.meta.env.VITE_API_URL;
+
+     fetch(`${API_URL}/api/portfolio`)
       .then((res) => res.json())
       .then((data) => {
         const initial = data.map((h) => ({

@@ -29,7 +29,9 @@ const PortfolioDashboard = () => {
   const [trades, setTrades] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/trades")
+    const API_URL = import.meta.env.VITE_API_URL;
+
+     fetch(`${API_URL}/api/trades`)
       .then((res) => res.json())
       .then((data) =>
         setTrades(data.sort((a, b) => new Date(b.date) - new Date(a.date)))

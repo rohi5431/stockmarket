@@ -8,7 +8,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   path: "/ws", // ✅ matches frontend
   cors: {
-    origin: "http://localhost:5173", // Vite dev server
+    origin: "*", // Vite dev server
     methods: ["GET", "POST"]
   }
 });

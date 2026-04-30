@@ -25,7 +25,10 @@ const TraderCard = ({ trader, index }) => {
     }
 
     try {
-      const url = `http://localhost:5000/api/strategies/${isFollowing ? "unfollow" : "follow"}/${trader.symbol}`;
+      const API_URL = import.meta.env.VITE_API_URL;
+      const STRATEGY_URL = import.meta.env.VITE_STRATEGY_URL;
+
+      const url = `${STRATEGY_URL}/api/strategies/${isFollowing ? "unfollow" : "follow"}/${trader.symbol}`;
       const res = await fetch(url, {
         method: "POST",
         headers: {

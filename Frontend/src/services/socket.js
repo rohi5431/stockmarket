@@ -1,7 +1,9 @@
 import { io } from "socket.io-client";
 
 // WebSocket server URL
-const SOCKET_URL = "http://localhost:7000";
+import { STRATEGY } from "../config/api";
+
+const SOCKET_URL = STRATEGY;
 
 // Create the socket connection
 export const socket = io(SOCKET_URL, {

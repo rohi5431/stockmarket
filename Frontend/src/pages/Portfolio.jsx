@@ -7,6 +7,7 @@ import PortfolioOverview from "../components/PortfolioOverview";
 import PortfolioDashboard from "../components/PortfolioDashboard";
 import axios from "axios";
 import ExportFile from "../components/ExportFile";
+import { API } from "../config/api";
 
 const Portfolio = () => {
   const [holdings, setHoldings] = useState([]);
@@ -20,7 +21,7 @@ const Portfolio = () => {
   useEffect(() => {
     const fetchHoldings = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/portfolio");
+        const res = await axios.get(`${API}/api/portfolio`);
         setHoldings(res.data);
       } catch (err) {
         console.error("Failed to fetch holdings:", err);
@@ -37,9 +38,7 @@ const Portfolio = () => {
       const updatedPrices = {};
       for (let h of holdings) {
         try {
-          const res = await axios.get(
-            `http://localhost:5000/api/quote/${h.symbol}`
-          );
+         const res = await axios.get(`${API}/api/quote/${h.symbol}`);
           updatedPrices[h.symbol] = res.data;
         } catch (err) {
           console.error(`Failed to fetch price for ${h.symbol}`, err);
@@ -57,7 +56,7 @@ const Portfolio = () => {
   useEffect(() => {
     const fetchTrades = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/trades");
+       const res = await axios.get(`${API}/api/trades`);
         setRecentTrades(res.data);
       } catch (err) {
         console.error("Failed to fetch trades:", err);

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { getQuote, getHistorical } from "../services/marketService";
 import Search from "../components/Search";
+import AITradingSignals from "../components/AITradingSignals";
 import {
   LineChart,
   Line,
@@ -122,12 +123,12 @@ const Market = () => {
         }
       });
       setWatchlist(updatedWatchlist);
-      setSelected(updatedWatchlist.find((w) => w.symbol === selected.symbol) || updatedWatchlist[0]);
+      setSelected((prev) => updatedWatchlist.find((w) => w.symbol === prev.symbol) || updatedWatchlist[0]);
     };
     updatePrices();
     const interval = setInterval(updatePrices, 10000);
     return () => clearInterval(interval);
-  }, [selected]);
+  }, []);
 
   // Place buy/sell orders
   const placeOrder = async (side) => {
@@ -151,7 +152,9 @@ const Market = () => {
       time: new Date().toISOString(),
     };
     try {
-      await axios.post("http://localhost:5000/api/order", order);
+       const API_URL = import.meta.env.VITE_API_URL;
+
+      await axios.post(`${API_URL}/api/order`, order);
       if (side === "BUY") {
         setBalance((prev) => prev - totalCost);
         addNotification(`Bought ${qtyNum} ${selected.symbol} for $${totalCost.toFixed(2)}`);
@@ -347,6 +350,12 @@ const Market = () => {
                 Sell
               </button>
             </div>
+            
+            <AITradingSignals 
+              symbol={selected.symbol} 
+              price={selected.price} 
+              change={selected.change} 
+            />
           </div>
         </aside>
       </div>

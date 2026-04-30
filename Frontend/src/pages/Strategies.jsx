@@ -11,6 +11,7 @@ import {
   Legend
 } from "chart.js";
 import { socket } from "../services/socket";
+import { STRATEGY } from "../config/api";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
@@ -20,7 +21,7 @@ const Strategies = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:7000/api/strategies")
+   fetch(`${STRATEGY}/api/strategies`)
       .then((res) => res.json())
       .then((data) => setStrategies(data))
       .catch(console.error);
@@ -41,7 +42,9 @@ const Strategies = () => {
   }, []);
 
   const toggleStatus = (symbol) => {
-    fetch(`http://localhost:7000/api/strategies/toggle/${symbol}`, { method: "POST" });
+    fetch(`${STRATEGY}/api/strategies/toggle/${symbol}`, {
+    method: "POST"
+})
   };
 
   return (
@@ -195,10 +198,10 @@ function CreateStrategyModal({ onClose, setStrategies }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:7000/api/strategies", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form)
+    fetch(`${STRATEGY}/api/strategies`, {
+     method: "POST",
+     headers: { "Content-Type": "application/json" },
+     body: JSON.stringify(form)
     })
       .then((res) => res.json())
       .then((data) => setStrategies((prev) => [...prev, data]))

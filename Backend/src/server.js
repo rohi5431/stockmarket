@@ -3,13 +3,11 @@ const express = require("express");
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
-const WebSocket = require("ws");
+// const WebSocket = require("ws"); ❌ disabled
 const mongoose = require("mongoose");
 
-// Redis client
 const { redisClient, connectRedis } = require("./config/redis");
 
-// Models
 const Trade = require("./models/Trade");
 const Position = require("./models/Position");
 const Strategy = require("./models/Strategy");
@@ -18,6 +16,7 @@ const History = require("./models/History");
 const portfolioRoutes = require("./routes/portfolioRoutes");
 const marketRoutes = require("./routes/marketRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const aiRoutes = require("./routes/aiRoutes");
 
 const { trades } = require("./models/Portfolio");
 
@@ -30,196 +29,84 @@ const io = new Server(server, {
 });
 
 connectRedis();
+
 app.get("/", async (req, res) => {
   await redisClient.set("test-key", "Hello Cloud Redis");
   const value = await redisClient.get("test-key");
   res.send(`Redis says: ${value}`);
 });
 
-const FINNHUB_API_KEY = process.env.FINNHUB_API_KEY;
-
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+  .catch((err) => console.error("MongoDB error:", err));
 
-const Origins = ["http://localhost:5173", "http://localhost:5174"];
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-
-      if (Origins.indexOf(origin) === -1) {
-        return callback(new Error("Origin not allowed"), false);
-      }
-
-      return callback(null, true);
-    },
-  })
-);
-
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 app.use("/api", portfolioRoutes);
 app.use("/api/market", marketRoutes);
 app.use("/api", orderRoutes);
+app.use("/api/ai", aiRoutes);
 
-const finnhubWS = new WebSocket(
-  `wss://ws.finnhub.io?token=${FINNHUB_API_KEY}`
-);
+// ❌ FINNHUB WEBSOCKET DISABLED (causing 401 error in production)
+// const finnhubWS = new WebSocket(`wss://ws.finnhub.io?token=${process.env.FINNHUB_API_KEY}`);
 
+// ⚠️ Instead simulate data (temporary)
 let positions = {};
 let portfolioHistory = [];
 let pnlHistory = [];
 let realizedPnL = 0;
-let topMovers = [];
+let topMovers = [
+  { symbol: "AAPL", price: 150, change: 1.2 },
+  { symbol: "TSLA", price: 200, change: -2.5 },
+  { symbol: "MSFT", price: 300, change: 0.8 },
+  { symbol: "NVDA", price: 450, change: 3.4 },
+  { symbol: "AMZN", price: 130, change: -1.1 }
+];
 
-finnhubWS.on("open", () => {
-  console.log("Connected to Finnhub WebSocket");
-
-  ["AAPL", "TSLA", "MSFT", "NVDA"].forEach((symbol) => {
-    finnhubWS.send(JSON.stringify({ type: "subscribe", symbol }));
+// 🔥 Simulate updates every 3 sec
+setInterval(async () => {
+  topMovers = topMovers.map((t) => {
+    const priceChange = (Math.random() - 0.5) * 5;
+    const newPrice = +(t.price + priceChange).toFixed(2);
+    const newChange = +((priceChange / t.price) * 100).toFixed(2);
+    return {
+      ...t,
+      price: newPrice,
+      change: newChange
+    };
   });
-});
 
-finnhubWS.on("message", async (msg) => {
-  try {
-    const data = JSON.parse(msg);
+  const time = new Date().toLocaleTimeString();
 
-    if (data.type === "trade") {
-      data.data.forEach((tradeData) => {
-        const symbol = tradeData.s;
-        const price = tradeData.p;
+  portfolioHistory.push({ time, value: Math.random() * 10000 });
+  pnlHistory.push({ time, value: Math.random() * 1000 });
 
-        const qty = Math.floor(Math.random() * 10) + 1;
-        const type = Math.random() > 0.5 ? "BUY" : "SELL";
+  if (portfolioHistory.length > 20) portfolioHistory.shift();
+  if (pnlHistory.length > 20) pnlHistory.shift();
 
-        const tradeEntry = {
-          symbol,
-          type,
-          qty,
-          price,
-          pnl: 0,
-          date: new Date().toLocaleDateString(),
-          time: new Date().toLocaleTimeString(),
-        };
+  await redisClient.setEx("stock:portfolioHistory", 5, JSON.stringify(portfolioHistory));
+  await redisClient.setEx("stock:pnlHistory", 5, JSON.stringify(pnlHistory));
+  await redisClient.setEx("stock:topMovers", 5, JSON.stringify(topMovers));
 
-        trades.push(tradeEntry);
-        if (trades.length > 50) trades.shift();
-
-        if (!positions[symbol]) {
-          positions[symbol] = { qty: 0, avgPrice: 0 };
-        }
-
-        const pos = positions[symbol];
-
-        if (type === "BUY") {
-          const totalCost = pos.avgPrice * pos.qty + price * qty;
-          pos.qty += qty;
-          pos.avgPrice = totalCost / pos.qty;
-        } else {
-          const sellQty = Math.min(qty, pos.qty);
-
-          if (sellQty > 0) {
-            const pnl = sellQty * (price - pos.avgPrice);
-            realizedPnL += pnl;
-            pos.qty -= sellQty;
-            tradeEntry.pnl = pnl;
-          }
-        }
-
-        const idx = topMovers.findIndex((t) => t.symbol === symbol);
-
-        if (idx >= 0) {
-          topMovers[idx].price = price;
-        } else {
-          topMovers.push({
-            symbol,
-            price,
-            change: 0,
-            prevClose: price,
-          });
-        }
-      });
-
-      let portfolioValue = 0;
-
-      for (let sym in positions) {
-        const pos = positions[sym];
-        const marketPrice =
-          topMovers.find((t) => t.symbol === sym)?.price || 0;
-
-        portfolioValue += pos.qty * marketPrice;
-      }
-
-      let unrealizedPnL = 0;
-
-      for (let sym in positions) {
-        const pos = positions[sym];
-        const marketPrice =
-          topMovers.find((t) => t.symbol === sym)?.price || 0;
-
-        unrealizedPnL += (marketPrice - pos.avgPrice) * pos.qty;
-      }
-
-      const totalPnL = unrealizedPnL + realizedPnL;
-      const time = new Date().toLocaleTimeString();
-
-      portfolioHistory.push({ time, value: portfolioValue });
-      pnlHistory.push({ time, value: totalPnL });
-
-      if (portfolioHistory.length > 20) portfolioHistory.shift();
-      if (pnlHistory.length > 20) pnlHistory.shift();
-
-      await redisClient.setEx(
-        "stock:portfolioHistory",
-        5,
-        JSON.stringify(portfolioHistory)
-      );
-
-      await redisClient.setEx(
-        "stock:pnlHistory",
-        5,
-        JSON.stringify(pnlHistory)
-      );
-
-      await redisClient.setEx(
-        "stock:trades",
-        5,
-        JSON.stringify(trades)
-      );
-
-      await redisClient.setEx(
-        "stock:topMovers",
-        5,
-        JSON.stringify(topMovers)
-      );
-
-      io.emit("portfolioUpdate", portfolioHistory);
-      io.emit("pnlUpdate", pnlHistory);
-      io.emit("tradesUpdate", trades);
-      io.emit("marketUpdate", topMovers);
-    }
-  } catch (err) {
-    console.error("Error processing message:", err.message);
-  }
-});
+  io.emit("portfolioUpdate", portfolioHistory);
+  io.emit("pnlUpdate", pnlHistory);
+  io.emit("marketUpdate", topMovers);
+}, 3000);
 
 io.on("connection", async (socket) => {
   console.log("⚡ Client connected:", socket.id);
 
   const cachedPortfolio = await redisClient.get("stock:portfolioHistory");
   const cachedPnL = await redisClient.get("stock:pnlHistory");
-  const cachedTrades = await redisClient.get("stock:trades");
   const cachedTopMovers = await redisClient.get("stock:topMovers");
 
   if (cachedPortfolio)
     socket.emit("portfolioUpdate", JSON.parse(cachedPortfolio));
 
-  if (cachedPnL) socket.emit("pnlUpdate", JSON.parse(cachedPnL));
-
-  if (cachedTrades) socket.emit("tradesUpdate", JSON.parse(cachedTrades));
+  if (cachedPnL)
+    socket.emit("pnlUpdate", JSON.parse(cachedPnL));
 
   if (cachedTopMovers)
     socket.emit("marketUpdate", JSON.parse(cachedTopMovers));
@@ -231,6 +118,6 @@ io.on("connection", async (socket) => {
 
 const PORT = process.env.PORT1 || 5000;
 
-server.listen(PORT, () => {
-  console.log(`REST API running on http://localhost:${PORT}`);
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

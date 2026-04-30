@@ -105,6 +105,7 @@ stockmarket/
 | **POST** | `/api/order` | Place an order |
 | **POST** | `/api/auth` | User authentication |
 | **GET** | `/api/strategies` | Fetch strategies list |
+| **POST**| `/api/ai/explain/:symbol` | Get AI-powered stock explanation |
 
 ---
 
@@ -295,6 +296,7 @@ MONGO_URI=mongodb://localhost:27017/stockmarket
 REDIS_HOST=127.0.0.1
 REDIS_PORT=6379
 FINNHUB_API_KEY=your_finnhub_api_key
+GEMINI_API_KEY=your_gemini_api_key
 PORT1=5000
 PORT2=7000
 ```

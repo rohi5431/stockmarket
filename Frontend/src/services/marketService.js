@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const API_BASE = "http://localhost:5000/api/market";
+import { API } from "../config/api";
+
+const API_BASE = `${API}/api/market`;
 
 // Cache to avoid spamming backend
 const quoteCache = new Map();
@@ -36,3 +38,13 @@ export async function getHistorical(symbol) {
     c: 100 + Math.sin(i / 3) * 5 + Math.random() * 2,
   }));
 }
+
+export const getNews = async () => {
+  try {
+    const response = await axios.get(`${API_BASE}/news`);
+    return response.data;
+  } catch (err) {
+    console.error(`Error fetching news:`, err.message);
+    return [];
+  }
+};

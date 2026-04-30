@@ -1,38 +1,49 @@
-version: "3.9"
+version: "3.8"
 
 services:
-
-  market-server:
-    build: ./Backend
-    command: node src/server.js
+  trading-server:
+    build: ./backend
+    container_name: trading-server
+    command: node tradingServer.js
     ports:
       - "5000:5000"
     environment:
-      PORT1: 5000
-      MONGO_URI: mongodb://mongo:27017/stockmarket
-      FINNHUB_API_KEY: ${FINNHUB_API_KEY}
+      - PORT1=5000
+      - MONGO_URI=mongodb://mongo:27017/stockdb
     depends_on:
       - mongo
       - redis
 
   strategy-server:
-    build: ./Backend
-    command: node src/str.js
+    build: ./backend
+    container_name: strategy-server
+    command: node strategyServer.js
     ports:
       - "7000:7000"
     environment:
-      PORT2: 7000
-      MONGO_URI: mongodb://mongo:27017/stockmarket
+      - PORT2=7000
+      - MONGO_URI=mongodb://mongo:27017/stockdb
     depends_on:
       - mongo
       - redis
 
-  redis:
-    image: redis:7
+  frontend:
+    build: ./frontend
+    container_name: frontend
     ports:
-      - "6379:6379"
+      - "80:80"
+    depends_on:
+      - trading-server
+      - strategy-server
 
   mongo:
-    image: mongo:6
+    image: mongo
+    container_name: mongo
     ports:
       - "27017:27017"
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
