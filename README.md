@@ -1,6 +1,6 @@
-# 📈 Stock Market Platform
+## 📈 Stock Market Platform
 
-A full-stack stock market simulation platform, with real-time data streaming, portfolio tracking, strategy management, authentication, and AI-powered insights.  
+A full-stack stock market simulation platform with real-time data streaming, portfolio tracking, strategy management, authentication, and AI-powered insights.
 Built using **Node.js**, **Express**, **Socket.IO**, **MongoDB**, **Redis**, **React**, and **FastAPI (ML Service)**.
 ---
 
@@ -455,7 +455,7 @@ http://localhost:5173
 
 ---
 
-# ✍️ Author
+### ✍️ Author
 
 **Rohit Kumar**
 
