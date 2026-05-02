@@ -4,7 +4,8 @@ A full-stack stock market simulation platform with **real-time data streaming, p
 Built using **Node.js (MERN)** + **Python FastAPI ML Service**.
 
 ### 🌐 Demo
-#### Render: https://stockmarket-14.onrender.com
+#### Render Backend: https://stockmarket-14.onrender.com
+#### Render ML_Services: https://stockmarket-15.onrender.com
 
 <h3 align="center">📊 AI Trading Dashboard</h3>
 <p align="center">
